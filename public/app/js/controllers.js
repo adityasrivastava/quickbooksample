@@ -1,11 +1,6 @@
-var controllersModule = angular.module('myApp', []);
-
-console.log("CHeck");
+var controllersModule = angular.module('myApp.controllers', []);
 
 controllersModule.controller('NavCtrl',['$scope', '$http', function($scope, $http){
-
-	console.log("Hello");
-
 
 	$scope.clickMe = function(){
 
