@@ -8,14 +8,11 @@ import java.util.Properties;
 public class OAuthUtils {
 	
 	Properties prop = new Properties();
-	public static final String PROP_FILE = "/app.properties";
+	public static final String PROP_FILE = "application.properties";
 	
 	public Properties readProperties()
 	{
 		try {
-			//InputStream input = new FileInputStream("/WEB-INF/app.properties");
-			//getServletContext().getResourceAsStream("/WEB-INF/app.properties")
-			
 			Thread currentThread = Thread.currentThread();
 			ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 			InputStream propertiesStream = contextClassLoader.getResourceAsStream(PROP_FILE);
@@ -31,11 +28,5 @@ public class OAuthUtils {
 				return prop; 
 			}
 	}
-	
-	public static final String REQUEST_TOKEN_URL = "https://oauth.intuit.com/oauth/v1/get_request_token";
-	public static final String ACCESS_TOKEN_URL = "https://oauth.intuit.com/oauth/v1/get_access_token";
-	public static final String AUTHORIZE_URL = "https://appcenter.intuit.com/connect/begin";
-	
-	
 
 }
