@@ -10,9 +10,10 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.project.quickbook.oauth.util.OAuthUtils;
+import com.project.quickbook.oauth.util.OAuthQBOUtils;
 
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
@@ -27,9 +28,10 @@ import oauth.signpost.http.HttpParameters;
 @Service
 public class OAuthServiceBean implements OAuthService{
 	
-	private Properties g_objProperties;
-	private OAuthUtils g_objOAuthUtils;
+//	private Properties g_objProperties;
+//	private OAuthUtils g_objOAuthUtils;
 	private OAuthConsumer g_objOAuthConsumer;
+	
 
 	@Override
 	public String requestTokenForAuthorization(HttpServletRequest param_objRequest) {
@@ -40,15 +42,15 @@ public class OAuthServiceBean implements OAuthService{
 		HttpSession v_objSession;
 		
 		// Read required properties from application.properties & initiate OAuthProvider
-		g_objOAuthUtils = new OAuthUtils();
-		g_objProperties = g_objOAuthUtils.readProperties();
+//		g_objOAuthUtils = new OAuthUtils();
+//		g_objProperties = g_objOAuthUtils.readProperties();
 		v_objSession = param_objRequest.getSession();
-		v_objOAuthProvider = new DefaultOAuthProvider(g_objProperties.getProperty("request_token_url"), g_objProperties.getProperty("access_token_url"), g_objProperties.getProperty("authorize_url"));
+		v_objOAuthProvider = new DefaultOAuthProvider(OAuthQBOUtils.REQUEST_TOKEN_URL, OAuthQBOUtils.ACCESS_TOKEN_URL, OAuthQBOUtils.AUTHORIZE_URL);
 		
 		// OAuth parameters and initiate request for access token
 		try{
-			g_objOAuthConsumer = new DefaultOAuthConsumer(g_objProperties.getProperty("oauth_consumer_key"), g_objProperties.getProperty("oauth_consumer_secret"));
-			v_objAuthUrl = v_objOAuthProvider.retrieveRequestToken(g_objOAuthConsumer, g_objProperties.getProperty("oauth_callbackURL"));
+			g_objOAuthConsumer = new DefaultOAuthConsumer(OAuthQBOUtils.OAUTH_CONSUMER_KEY, OAuthQBOUtils.OAUTH_CONSUMER_SECRET);
+			v_objAuthUrl = v_objOAuthProvider.retrieveRequestToken(g_objOAuthConsumer, OAuthQBOUtils.OAUTH_CALLBACK_URL);
 			v_objSession.setAttribute("oauthConsumer", g_objOAuthConsumer);
 			return v_objAuthUrl;
 		}catch(Exception ex){
@@ -67,18 +69,18 @@ public class OAuthServiceBean implements OAuthService{
 		URL v_objUrl;
 		HttpURLConnection v_objUrlConnection;
 		
-		g_objOAuthUtils = new OAuthUtils();
-		g_objProperties = g_objOAuthUtils.readProperties();
-		v_objOAuthConsumer = new DefaultOAuthConsumer(g_objProperties.getProperty("oauth_consumer_key"), g_objProperties.getProperty("oauth_consumer_secret"));
+//		g_objOAuthUtils = new OAuthUtils();
+//		g_objProperties = g_objOAuthUtils.readProperties();
+		v_objOAuthConsumer = new DefaultOAuthConsumer(OAuthQBOUtils.OAUTH_CONSUMER_KEY, OAuthQBOUtils.OAUTH_CONSUMER_SECRET);
 		
 		HttpParameters p = new HttpParameters();
-		p.put("oauth_token_secret", g_objProperties.getProperty("accessTokenSecret"));
-		p.put("oauth_token", g_objProperties.getProperty("accessToken"));
+		p.put("oauth_token_secret", OAuthQBOUtils.ACCESS_TOKEN_SECRET);
+		p.put("oauth_token", OAuthQBOUtils.ACCESS_TOKEN);
 		
 		v_objOAuthConsumer.setAdditionalParameters(p);
 		StringBuffer sb = new StringBuffer();
 		try {
-			v_objSignedUrl = v_objOAuthConsumer.sign(g_objProperties.getProperty("access_reconnect_token_url"));
+			v_objSignedUrl = v_objOAuthConsumer.sign(OAuthQBOUtils.ACCESS_RECONNECT_TOKEN_URL);
 			System.out.println(v_objSignedUrl);
 			v_objUrl = new URL(v_objSignedUrl);
 			v_objUrlConnection = (HttpURLConnection) v_objUrl.openConnection();
@@ -125,8 +127,8 @@ public class OAuthServiceBean implements OAuthService{
 		v_objSession = param_objRequest.getSession();
 		g_objOAuthConsumer = (OAuthConsumer) v_objSession.getAttribute("oauthConsumer");
 		v_objHttpParameters = new HttpParameters();
-		g_objOAuthUtils = new OAuthUtils();
-		g_objProperties = g_objOAuthUtils.readProperties();
+//		g_objOAuthUtils = new OAuthUtils();
+//		g_objProperties = g_objOAuthUtils.readProperties();
 
 		v_objHttpParameters.put("oauth_callback",OAuth.OUT_OF_BAND);
 		v_objHttpParameters.put("oauth_verifier", param_objOAuthVerifier);
@@ -134,7 +136,7 @@ public class OAuthServiceBean implements OAuthService{
 		
 		try {
 			// Generate signed url for retreving access token
-			v_objSignedUrl = g_objOAuthConsumer.sign(g_objProperties.getProperty("access_token_url"));
+			v_objSignedUrl = g_objOAuthConsumer.sign(OAuthQBOUtils.ACCESS_TOKEN_URL);
 			v_objUrl = new URL(v_objSignedUrl);
 			
 			// Retreving access token from the signed url genereated above
