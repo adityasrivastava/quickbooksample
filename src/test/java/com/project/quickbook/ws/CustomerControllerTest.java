@@ -29,6 +29,11 @@ public class CustomerControllerTest extends AbstractTestController{
 		super.setUp();
 	}
 	
+	@Test
+	public void test(){
+		
+	}
+	
 	//@Test
 	public void addNewCustomerTest(){
 		
@@ -75,7 +80,7 @@ public class CustomerControllerTest extends AbstractTestController{
 		
 	}
 	
-	@Test
+	//@Test
 	public void updateACustomer(){
 		
 		String v_objUri = "/api/customer/updateCustomer";
