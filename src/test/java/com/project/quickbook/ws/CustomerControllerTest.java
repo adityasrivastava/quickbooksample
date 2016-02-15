@@ -34,7 +34,7 @@ public class CustomerControllerTest extends AbstractTestController{
 		
 	}
 	
-	//@Test
+	@Test
 	public void addNewCustomerTest(){
 		
 		String v_objUri = "/api/customer/addNewCustomer";
@@ -113,7 +113,7 @@ public class CustomerControllerTest extends AbstractTestController{
 		
 	}
 	
-	@Test
+	//@Test
 	public void getACustomer(){
 		
 		String v_objUri = "/api/customer/findACustomer";
