@@ -54,10 +54,10 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(g_objCustomerService.updateCustomer(param_objCustomer), HttpStatus.OK);
 	}
 	
-//	@RequestMapping(value="/api/customer/sparseUpdateCustomer", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<Customer> sparseUpdateACustomer(@RequestBody Customer param_objCustomer){
-//		return new ResponseEntity<Customer>(g_objCustomerService.updateCustomer(param_objCustomer), HttpStatus.OK);
-//	}
+	@RequestMapping(value="/api/customer/sparseUpdateCustomer", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Customer> sparseUpdateACustomer(@RequestBody Customer param_objCustomer){
+		return new ResponseEntity<Customer>(g_objCustomerService.updateCustomer(param_objCustomer), HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/api/customer/findACustomer", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> findACustomer(@RequestBody Customer param_objCustomer){
