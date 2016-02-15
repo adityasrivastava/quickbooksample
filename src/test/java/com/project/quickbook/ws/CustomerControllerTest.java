@@ -29,7 +29,7 @@ public class CustomerControllerTest extends AbstractTestController{
 		super.setUp();
 	}
 	
-	@Test
+	//@Test
 	public void test(){
 		
 	}
@@ -113,13 +113,13 @@ public class CustomerControllerTest extends AbstractTestController{
 		
 	}
 	
-	//@Test
+	@Test
 	public void getACustomer(){
 		
 		String v_objUri = "/api/customer/findACustomer";
 		MvcResult v_objMvcResult;
 		try {
-			v_objMvcResult = g_objMvc.perform(MockMvcRequestBuilders.get(v_objUri).content(
+			v_objMvcResult = g_objMvc.perform(MockMvcRequestBuilders.post(v_objUri).content(
 					new ObjectMapper()
 					.writeValueAsString(getCustomerById()))
 					.contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -142,7 +142,6 @@ public class CustomerControllerTest extends AbstractTestController{
 					.writeValueAsString(customer))
 					.contentType(MediaType.APPLICATION_JSON_VALUE))
 					.andReturn();
-			
 			String jsonString = v_objMvcResult.getResponse().getContentAsString();
 			return new ObjectMapper().readValue(jsonString, Customer.class);
 		}catch(JsonParseException jEx){
@@ -174,7 +173,7 @@ public class CustomerControllerTest extends AbstractTestController{
 	public Customer getNewCustomer(){
 		
 		Customer v_objNewCustomer = new Customer();
-		v_objNewCustomer.setDisplayName("Area52");
+		v_objNewCustomer.setDisplayName("Lost43");
 		return v_objNewCustomer;
 		
 	}

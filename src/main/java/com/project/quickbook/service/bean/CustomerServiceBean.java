@@ -1,9 +1,11 @@
 package com.project.quickbook.service.bean;
 
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intuit.ipp.core.Context;
@@ -12,12 +14,16 @@ import com.intuit.ipp.data.Customer;
 import com.intuit.ipp.exception.FMSException;
 import com.intuit.ipp.security.OAuthAuthorizer;
 import com.intuit.ipp.services.DataService;
+import com.project.quickbook.mapper.CustomerMapper;
 import com.project.quickbook.oauth.util.OAuthQBOUtils;
+import com.project.quickbook.repository.CustomerRepository;
 import com.project.quickbook.service.CustomerService;
 
 @Service
 public class CustomerServiceBean implements CustomerService{
 
+	@Autowired
+	private CustomerRepository g_objCustomerRepo;
 	private OAuthAuthorizer g_objOAuthAuthorizer;
 	private Context g_objContext;
 	private DataService g_objDataService;
@@ -80,6 +86,15 @@ public class CustomerServiceBean implements CustomerService{
 			g_objDataService = new DataService(g_objContext);
 			v_objCustomer = g_objDataService.findById(customer);
 			
+			CustomerMapper mapper = new CustomerMapper();
+			com.project.quickbook.model.Customer customerMapped = mapper.mapQBOCustomerToCustomerModel(v_objCustomer);
+			
+			com.project.quickbook.model.Customer customerRepo = g_objCustomerRepo.save(customerMapped);
+			
+			
+	
+			com.project.quickbook.model.Customer customerRepo1 = g_objCustomerRepo.findOne(new Long(1));
+			System.out.println("REpo customer: "+customerRepo1.toString());
 			return v_objCustomer;
 			
 		} catch (FMSException e) {

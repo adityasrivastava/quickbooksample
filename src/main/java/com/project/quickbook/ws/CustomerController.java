@@ -59,7 +59,7 @@ public class CustomerController {
 //		return new ResponseEntity<Customer>(g_objCustomerService.updateCustomer(param_objCustomer), HttpStatus.OK);
 //	}
 	
-	@RequestMapping(value="/api/customer/findACustomer", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/api/customer/findACustomer", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Customer> findACustomer(@RequestBody Customer param_objCustomer){
 		return new ResponseEntity<Customer>(g_objCustomerService.findACustomer(param_objCustomer), HttpStatus.OK);
 	}
