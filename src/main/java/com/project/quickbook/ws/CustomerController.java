@@ -74,6 +74,14 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(new Customer(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/api/sync/customer/getAllCustomers", method=RequestMethod.GET)
+	public void sysncAllCustomerDetails(){
+		g_objCustomerService.syncfindAllCustomer();
+		//return new ResponseEntity<Customer>(HttpStatus.OK);
+	}
+	
+	
+	 
 
 
 

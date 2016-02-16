@@ -11,5 +11,7 @@ public interface CustomerService {
 	Customer updateCustomer(Customer customer);
 	Customer findACustomer(Customer customer);
 	List<Customer> findAllCustomer();
+	Customer syncFindACustomer(Customer customer);
+	List<Customer> syncfindAllCustomer();
 
 }
